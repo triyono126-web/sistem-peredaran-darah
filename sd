@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab Maya Sistem Peredaran Darah</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#eff8ff;color:#18334b}
+header{background:linear-gradient(120deg,#123e67,#167e91);color:white;padding:28px 6%;text-align:center}
+h1{margin:5px;font-size:clamp(25px,4vw,40px)}
+main{max-width:1000px;margin:auto;padding:20px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+button{border:0;border-radius:10px;padding:12px 15px;cursor:pointer;font-weight:bold;background:#dcecf7;color:#174668}
+button:hover{filter:brightness(.95)}
+button.active,.primary{background:#176c8b;color:white}
+.card{background:white;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 5px 20px #123e6710}
+.heart{font-size:90px;text-align:center;padding:10px}
+.rooms{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.room{padding:20px 8px;border-radius:14px;text-align:center;color:white;font-weight:bold;cursor:pointer}
+.blue{background:#287fc1}.red{background:#dc5057}
+#info{background:#edf7ff;padding:15px;border-radius:12px;line-height:1.6}
+.flow{line-height:2;font-weight:bold;font-size:17px}
+.hidden{display:none}
+.answer{display:block;width:100%;text-align:left;margin:8px 0;background:#edf5fb}
+.good{background:#d7f7df!important}.bad{background:#ffe0df!important}
+footer{text-align:center;padding:20px;color:#526c80}
+</style>
+</head>
+<body>
+<header>
+<div>🔬 LABORATORIUM SAINS VIRTUAL</div>
+<h1>❤️ Petualangan Sistem Peredaran Darah</h1>
+<p>Kenali jantung, telusuri perjalanan darah, dan jadilah Penjaga Jantung!</p>
+</header>
+<main>
+<nav>
+<button class="active" onclick="show('jantung',this)">❤️ Jantung</button>
+<button onclick="show('pembuluh',this)">🩸 Pembuluh</button>
+<button onclick="show('darah',this)">🔬 Komponen Darah</button>
+<button onclick="show('simulasi',this)">🔄 Simulasi</button>
+<button onclick="show('kuis',this)">⭐ Kuis</button>
+<button onclick="show('sehat',this)">💚 Hidup Sehat</button>
+</nav>
+
+<section id="jantung" class="card">
+<h2>Stasiun 1 — Ruang Kendali Jantung</h2>
+<p>Jantung adalah organ otot yang memompa darah ke paru-paru dan seluruh tubuh.</p>
+<div class="heart">❤️</div>
+<div class="rooms">
+<button class="room blue" onclick="detail('Serambi kanan','Menerima darah rendah oksigen dari seluruh tubuh melalui vena kava.')">Serambi kanan</button>
+<button class="room red" onclick="detail('Serambi kiri','Menerima darah kaya oksigen dari paru-paru melalui vena pulmonalis.')">Serambi kiri</button>
+<button class="room blue" onclick="detail('Bilik kanan','Memompa darah rendah oksigen menuju paru-paru melalui arteri pulmonalis.')">Bilik kanan</button>
+<button class="room red" onclick="detail('Bilik kiri','Memompa darah kaya oksigen menuju seluruh tubuh melalui aorta.')">Bilik kiri</button>
+</div>
+<p id="info">Pilih salah satu ruang jantung untuk mempelajari fungsinya.</p>
+<p><b>Fakta:</b> Katup jantung membantu menjaga aliran darah tetap satu arah.</p>
+</section>
+
+<section id="pembuluh" class="card hidden">
+<h2>Stasiun 2 — Jelajah Pembuluh Darah</h2>
+<button onclick="detail('Arteri','Membawa darah keluar dari jantung. Sebagian besar arteri membawa darah kaya oksigen.')">🔴 Arteri</button>
+<button onclick="detail('Vena','Membawa darah menuju jantung. Sebagian besar vena membawa darah rendah oksigen.')">🔵 Vena</button>
+<button onclick="detail('Kapiler','Pembuluh sangat kecil tempat pertukaran gas, zat makanan, dan zat sisa dengan jaringan tubuh.')">🟣 Kapiler</button>
+<p id="info2">Pilih jenis pembuluh untuk melihat penjelasan.</p>
+</section>
+
+<section id="darah" class="card hidden">
+<h2>Stasiun 3 — Laboratorium Komponen Darah</h2>
+<button onclick="detail('Plasma darah','Bagian cair darah yang mengangkut berbagai zat, termasuk nutrisi, hormon, dan zat sisa.')">Plasma</button>
+<button onclick="detail('Eritrosit','Sel darah merah mengandung hemoglobin untuk mengangkut oksigen.')">Eritrosit</button>
+<button onclick="detail('Leukosit','Sel darah putih berperan dalam pertahanan tubuh melawan infeksi.')">Leukosit</button>
+<button onclick="detail('Trombosit','Keping darah membantu proses pembekuan ketika pembuluh darah terluka.')">Trombosit</button>
+<p id="info3">Pilih komponen darah untuk mempelajari fungsinya.</p>
+</section>
+
+<section id="simulasi" class="card hidden">
+<h2>Stasiun 4 — Simulator Perjalanan Darah</h2>
+<p>Pilih rute untuk menelusuri perjalanan darah.</p>
+<button onclick="route('kecil')">Peredaran darah kecil</button>
+<button onclick="route('besar')">Peredaran darah besar</button>
+<div id="route" class="flow">Perjalanan darah akan ditampilkan di sini.</div>
+<button class="primary" onclick="nextStep()">▶ Langkah berikutnya</button>
+<button onclick="resetRoute()">↻ Ulangi</button>
+</section>
+
+<section id="kuis" class="card hidden">
+<h2>Stasiun 5 — Tantangan Pengetahuan</h2>
+<p id="progress">Soal 1 dari 5</p>
+<h3 id="question"></h3>
+<div id="answers"></div>
+<p id="feedback" aria-live="polite"></p>
+<button class="primary" id="next" onclick="nextQuestion()" disabled>Soal berikutnya →</button>
+</section>
+
+<section id="sehat" class="card hidden">
+<h2>Misi Penjaga Jantung 💚</h2>
+<p>Pilih kebiasaan yang membantu menjaga kesehatan sistem peredaran darah.</p>
+<label><input type="checkbox" class="habit"> Berolahraga secara teratur</label><br><br>
+<label><input type="checkbox" class="habit"> Mengonsumsi makanan bergizi seimbang</label><br><br>
+<label><input type="checkbox" class="habit"> Tidur dan beristirahat cukup</label><br><br>
+<label><input type="checkbox" class="habit"> Merokok setiap hari</label><br><br>
+<button class="primary" onclick="checkHealth()">Periksa misi</button>
+<p id="healthResult"></p>
+</section>
+</main>
+<footer>Lab Maya IPAS SD • Belajar dengan mengamati, mencoba, dan menemukan!</footer>
+<script>
+function show(id,btn){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+function detail(title,text){
+ ['info','info2','info3'].forEach(id=>{
+  let e=document.getElementById(id);
+  if(e)e.textContent=title+': '+text;
+ });
+}
+let steps=[],step=0;
+function route(type){
+ steps=type==='kecil'
+ ?['Bilik kanan','Arteri pulmonalis','Paru-paru: pertukaran gas','Vena pulmonalis','Serambi kiri']
+ :['Bilik kiri','Aorta','Arteri tubuh','Kapiler jaringan tubuh: pertukaran zat','Vena tubuh','Serambi kanan'];
+ step=0;showStep();
+}
+function showStep(){
+ document.getElementById('route').textContent=steps.length
+ ? 'Langkah '+(step+1)+' dari '+steps.length+': '+steps[step]
+ : 'Pilih rute peredaran darah terlebih dahulu.';
+}
+function nextStep(){
+ if(!steps.length)return;
+ step=(step+1)%steps.length;showStep();
+}
+function resetRoute(){step=0;showStep()}
+const questions=[
+ ['Apa fungsi utama jantung?',['Mencerna makanan','Memompa darah','Menyaring udara'],1,'Jantung memompa darah ke paru-paru dan tubuh.'],
+ ['Ruang yang memompa darah ke paru-paru adalah...',['Bilik kanan','Serambi kiri','Bilik kiri'],0,'Bilik kanan memompa darah ke paru-paru.'],
+ ['Pembuluh yang membawa darah menuju jantung adalah...',['Arteri','Kapiler','Vena'],2,'Vena membawa darah menuju jantung.'],
+ ['Sel darah yang mengangkut oksigen adalah...',['Leukosit','Eritrosit','Trombosit'],1,'Eritrosit mengandung hemoglobin.'],
+ ['Di mana pertukaran gas dengan jaringan terutama terjadi?',['Kapiler','Aorta','Katup jantung'],0,'Dinding kapiler yang tipis mendukung pertukaran zat.']
+];
+let qi=0,score=0,answered=false;
+function renderQ(){
+ answered=false;
+ document.getElementById('next').disabled=true;
+ document.getElementById('progress').textContent='Soal '+(qi+1)+' dari '+questions.length;
+ document.getElementById('feedback').textContent='';
+ document.getElementById('question').textContent=questions[qi][0];
+ let box=document.getElementById('answers');box.innerHTML='';
+ questions[qi][1].forEach((a,i)=>{
+  let b=document.createElement('button');b.className='answer';b.textContent=a;
+  b.onclick=()=>{
+   if(answered)return;answered=true;
+   let q=questions[qi],ok=i===q[2];
+   b.classList.add(ok?'good':'bad');
+   if(ok)score++;
+   else box.children[q[2]].classList.add('good');
+   document.getElementById('feedback').textContent=(ok?'✅ Benar! ':'💡 Belum tepat. ')+q[3];
+   document.getElementById('next').disabled=false;
+   document.getElementById('next').textContent=qi===questions.length-1?'Lihat skor':'Soal berikutnya →';
+  };
+  box.appendChild(b);
+ });
+}
+function nextQuestion(){
+ if(!answered)return;
+ if(qi<questions.length-1){qi++;renderQ();}
+ else{
+  document.getElementById('question').textContent='Skor kamu: '+score+' dari '+questions.length;
+  document.getElementById('answers').innerHTML='';
+  document.getElementById('feedback').textContent=score>=4?'Hebat, Penjaga Jantung!':'Terus berlatih dan coba lagi!';
+  document.getElementById('next').textContent='Ulangi kuis';
+  document.getElementById('next').onclick=()=>{
+   qi=0;score=0;
+   document.getElementById('next').onclick=nextQuestion;
+   document.getElementById('next').textContent='Soal berikutnya →';
+   renderQ();
+  };
+ }
+}
+function checkHealth(){
+ let boxes=[...document.querySelectorAll('.habit')];
+ let correct=boxes.filter((b,i)=>i<3&&b.checked).length;
+ let wrong=boxes[3].checked;
+ document.getElementById('healthResult').textContent=
+ !wrong&&correct===3?'🎉 Misi berhasil! Kamu memilih semua kebiasaan sehat.':
+ 'Ayo pilih tiga kebiasaan sehat dan jangan memilih merokok.';
+}
+renderQ();
+</script>
+</body>
+</html>
